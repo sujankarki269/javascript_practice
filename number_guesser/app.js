@@ -11,8 +11,10 @@ GAME FUNCTION:
 
 let min = 1,
     max = 10,
-    guessesLeft = 3,
     winningNum = getRandomNum(min, max),
+    guessesLeft = 3;
+    // totalWon = 0,
+    // totalLoss = 0;
 
 
 // UI Elements
@@ -22,16 +24,22 @@ const game = document.querySelector('#game'),
     guessBtn = document.querySelector('#guess-btn'),
     guessInput = document.querySelector('#guess-input'),
     message = document.querySelector('.message');
+    // maxLoss = document.querySelector('.max-loss'),
+    // maxWon = document.querySelector('.max-won');
 
 // Assign UI min and max
 minNum.textContent = min;
 maxNum.textContent = max;
+// maxWon.textContent = totalWon;
+// maxLoss.textContent = totalLoss;
 
 
 // Play again event listener
 game.addEventListener('mousedown', function (e) {
     if (e.target.className === 'play-again') {
+        
         window.location.reload();
+        
     }
 });
 
@@ -45,7 +53,7 @@ guessBtn.addEventListener('click', function () {
     if (guess === winningNum) {
         // Game over - won
         gameOver(true, `${winningNum} is correct, YOU WIN!`);
-
+        // totalWon += 1;
     } else {
         // Wrong number
         guessesLeft -= 1;
@@ -53,6 +61,7 @@ guessBtn.addEventListener('click', function () {
         if (guessesLeft === 0) {
             // Game over - lost
             gameOver(false, `Game Over, you lost. The correct number was ${winningNum}`);
+            // totalLoss += 1;
         } else {
             // Game continues - answer wrong
 
@@ -64,9 +73,12 @@ guessBtn.addEventListener('click', function () {
 
             // Tell user its the wrong number
             setMessage(`${guess} is not correct, ${guessesLeft} guesses left`, 'red');
+
         }
     }
 
+    // maxWon.textContent = totalWon;
+    // maxLoss.textContent = totalLoss;
 });
 // Game over
 function gameOver(won, msg) {
